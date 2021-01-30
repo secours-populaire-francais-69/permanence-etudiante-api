@@ -11,3 +11,14 @@ services:
       MYSQL_PASSWORD: dbpassword
     volumes:
       - ./storage/mysql:/var/lib/mysql
+  mysql_test:
+    image: mysql:5.7
+    ports:
+      - "13307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: permanence_etudiante
+      MYSQL_USER: spf
+      MYSQL_PASSWORD: dbpassword
+    volumes:
+      - ./storage/mysql:/var/lib/mysql_test
