@@ -9,3 +9,6 @@ tmp
 
 # The development sqlite file
 database/*.sqlite
+
+# The development database file
+storage
