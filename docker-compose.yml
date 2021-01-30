@@ -6,8 +6,8 @@ services:
       - "13306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: haddock
-      MYSQL_USER: captain
-      MYSQL_PASSWORD: tintin
+      MYSQL_DATABASE: permanence_etudiante
+      MYSQL_USER: spf
+      MYSQL_PASSWORD: dbpassword
     volumes:
       - ./storage/mysql:/var/lib/mysql
