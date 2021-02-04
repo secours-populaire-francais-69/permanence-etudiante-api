@@ -1,28 +1,60 @@
-# Adonis API application
+# Permanence etudiante API
 
-This is the boilerplate for creating an API server in AdonisJs, it comes pre-configured with.
+this project is done with node/adonis
 
-1. Bodyparser
-2. Authentication
-3. CORS
-4. Lucid ORM
-5. Migrations and seeds
+[staging](https://permanence-etudiante-staging.herokuapp.com/)
+[prod](https://permanence-etudiante.herokuapp.com/)
 
-## Setup
+[staging documentation](https://permanence-etudiante-staging.herokuapp.com/docs/)
+you can tests any api via the "Try it out" button in the documentation page
 
-Use the adonis command to install the blueprint
+## Requirements
+
+- npm >= 7.3.0
+- node >= 15.5.1
+- docker
+- docker-compose
+
+## setup
+
+start database (mysql)
 
 ```bash
-adonis new yardstick --api-only
+docker-compose up
 ```
 
-or manually clone the repo and then run `npm install`.
+install backend
+```bash
+npm install
+```
 
+set env
+```bash
+cp .env.example .env
+```
 
-### Migrations
+run database migrations
+```bash
+node ace migration:run
+```
 
-Run the following command to run startup migrations.
+## Start
 
-```js
-adonis migration:run
+start backend server
+```bash
+npm start
+```
+
+## Tests
+
+run test suite
+```bash
+npm run test
+```
+
+## Documentation
+
+check the url
+```bash
+http://127.0.0.1:3333/docs/
 ```
