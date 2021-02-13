@@ -13,7 +13,6 @@
 |
 */
 
-/** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use("Route");
 
 Route.get("/", () => {
@@ -22,3 +21,5 @@ Route.get("/", () => {
 
 Route.post("login", "UserController.login");
 Route.post("signup", "UserController.signup");
+
+Route.get("whoami", "UserController.whoami").middleware(["auth:jwt"]);
