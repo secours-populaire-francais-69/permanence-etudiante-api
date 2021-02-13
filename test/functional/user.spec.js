@@ -65,3 +65,23 @@ test("login should return 401 when wrong credential", async ({ client }) => {
 
   response.assertStatus(400);
 });
+
+test("when not auth client get 401 when trying to get whoami", async ({
+  client,
+}) => {
+  await Factory.model("App/Models/User").create();
+  const response = await client.get(`/whoami`).end();
+
+  response.assertStatus(401);
+});
+
+test("get detail of a room", async ({ client }) => {
+  const user = await Factory.model("App/Models/User").create();
+  const response = await client.get(`whoami`).loginVia(user).end();
+
+  response.assertStatus(200);
+  response.assertJSONSubset({
+    username: user.username,
+    email: user.email,
+  });
+});
