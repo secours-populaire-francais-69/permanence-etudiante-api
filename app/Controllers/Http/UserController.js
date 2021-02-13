@@ -127,6 +127,30 @@ class UserController {
       });
     }
   }
+
+  /**
+   * @swagger
+   * /whoami:
+   *   get:
+   *     summary: rest api to get my information
+   *     produces:
+   *       - application/json
+   *     security:
+   *       - bearerAuth: []
+   *     responses:
+   *       200:
+   *         description: user info
+   *         schema:
+   *           $ref: '#/definitions/User'
+   *       401:
+   *         description: User is not connected
+   *       500:
+   *         description: server error
+   */
+  async whoami({ auth, response }) {
+    const currentUser = await auth.getUser();
+    response.status(200).json(currentUser);
+  }
 }
 
 module.exports = UserController;
