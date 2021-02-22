@@ -41,13 +41,13 @@ test("sign should return token infos when succeed and create the user", async ({
   const response = await client
     .post("/signup")
     .send({
-      username: "captain haddock",
-      email: "captain@haddock.fr",
+      username: "jean",
+      email: "jean@spf.fr",
       password: "password",
     })
     .end();
 
-  const user = await User.findBy("email", "captain@haddock.fr");
+  const user = await User.findBy("email", "jean@spf.fr");
   const tokens = await user.tokens().fetch();
   response.assertStatus(201);
   response.assertJSONSubset({
@@ -75,7 +75,7 @@ test("when not auth client get 401 when trying to get whoami", async ({
   response.assertStatus(401);
 });
 
-test("get detail of a room", async ({ client }) => {
+test("get detail of a whoami", async ({ client }) => {
   const user = await Factory.model("App/Models/User").create();
   const response = await client.get(`whoami`).loginVia(user).end();
 
