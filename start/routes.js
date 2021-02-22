@@ -23,3 +23,6 @@ Route.post("login", "UserController.login");
 Route.post("signup", "UserController.signup");
 
 Route.get("whoami", "UserController.whoami").middleware(["auth:jwt"]);
+Route.resource("basic-services", "BasicServiceController").middleware([
+  "auth:jwt",
+]);
