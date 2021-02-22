@@ -20,3 +20,12 @@ Factory.blueprint("App/Models/User", async (faker) => {
     password: "password",
   };
 });
+
+Factory.blueprint("App/Models/BasicService", async (faker) => {
+  return {
+    startAt: faker.date(),
+    endAt: faker.date(),
+    maxPeople: faker.integer({ min: 1, max: 50 }),
+    isClosed: faker.bool(),
+  };
+});
