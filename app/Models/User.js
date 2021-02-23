@@ -46,6 +46,17 @@ class User extends Model {
     });
   }
 
+  basicServices() {
+    return this.manyThrough(
+      "App/Models/BasicServiceSubscriber",
+      "basicServices"
+    );
+  }
+
+  basicServiceSubscribers() {
+    return this.hasMany("App/Models/BasicServiceSubscriber");
+  }
+
   static get hidden() {
     return ["password"];
   }
