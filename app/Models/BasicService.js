@@ -34,6 +34,14 @@ class BasicService extends Model {
   static get dates() {
     return super.dates.concat(["startAt", "endAt"]);
   }
+
+  users() {
+    return this.manyThrough("App/Models/BasicServiceSubscriber", "users");
+  }
+
+  basicServiceSubscribers() {
+    return this.hasMany("App/Models/BasicServiceSubscriber");
+  }
 }
 
 module.exports = BasicService;
