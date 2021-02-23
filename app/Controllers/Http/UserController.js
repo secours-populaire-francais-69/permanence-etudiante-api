@@ -81,8 +81,16 @@ class UserController {
    *         schema:
    *           type: object
    *           properties:
-   *             username:
+   *             firstName:
    *               type: string
+   *             lastName:
+   *               type: string
+   *             popAcceuilNumber:
+   *               type: string
+   *             isVolunteer:
+   *               type: boolean
+   *             isAdmin:
+   *               type: boolean
    *             email:
    *               type: string
    *             password:
