@@ -208,6 +208,77 @@ class BasicServiceController {
     await basicServiceToDelete.delete();
     response.status(200).json(basicServiceToDelete);
   }
+
+  /**
+   * @swagger
+   * /basic-services/{basicServiceId}/subscribe:
+   *   post:
+   *     summary: rest api to subscribe to a basic service for current user
+   *     security:
+   *       - bearerAuth: []
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - in: path
+   *         name: basicServiceId
+   *         schema:
+   *           type: integer
+   *         required: true
+   *         description: Numeric ID of the basic service to get
+   *     responses:
+   *       201:
+   *         description: subscribe to a basicService
+   *         schema:
+   *           $ref: '#/definitions/BasicServiceSubscriber'
+   *       500:
+   *         description: server error
+   */
+  async subscribe({ params, auth, response }) {
+    const basicService = await BasicService.findOrFail(params.id);
+    const currentUser = await auth.getUser();
+    const basicServiceSubscriber = await currentUser
+      .basicServiceSubscribers()
+      .create({
+        basicServiceId: basicService.id,
+      });
+
+    response.status(201).json(basicServiceSubscriber);
+  }
+
+  /**
+   * @swagger
+   * /basic-services/{basicServiceId}/unsubscribe:
+   *   post:
+   *     summary: rest api to unsubscribe to a basic service for current user
+   *     security:
+   *       - bearerAuth: []
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - in: path
+   *         name: basicServiceId
+   *         schema:
+   *           type: integer
+   *         required: true
+   *         description: Numeric ID of the basic service to get
+   *     responses:
+   *       201:
+   *         description: unsubscribe to a basicService
+   *         schema:
+   *           $ref: '#/definitions/BasicServiceSubscriber'
+   *       500:
+   *         description: server error
+   */
+  async unsubscribe({ params, auth, response }) {
+    const basicService = await BasicService.findOrFail(params.id);
+    const currentUser = await auth.getUser();
+    await currentUser
+      .basicServiceSubscribers()
+      .where("basicServiceId", basicService.id)
+      .delete();
+
+    response.status(201).json(basicService);
+  }
 }
 
 module.exports = BasicServiceController;

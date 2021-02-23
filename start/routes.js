@@ -26,3 +26,11 @@ Route.get("whoami", "UserController.whoami").middleware(["auth:jwt"]);
 Route.resource("basic-services", "BasicServiceController").middleware([
   "auth:jwt",
 ]);
+Route.post(
+  "basic-services/:id/subscribe",
+  "BasicServiceController.subscribe"
+).middleware(["auth:jwt"]);
+Route.post(
+  "basic-services/:id/unsubscribe",
+  "BasicServiceController.unsubscribe"
+).middleware(["auth:jwt"]);

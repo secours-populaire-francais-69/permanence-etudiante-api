@@ -1,5 +1,6 @@
 const { test, trait, beforeEach } = use("Test/Suite")("BasicService");
 const BasicService = use("App/Models/BasicService");
+const BasicServiceSubscriber = use("App/Models/BasicServiceSubscriber");
 const Token = use("App/Models/Token");
 const User = use("App/Models/User");
 const Factory = use("Factory");
@@ -139,4 +140,38 @@ test("delete an basic-service", async ({ client, assert }) => {
   const deleteBasicService = await BasicService.find(basicService.id);
 
   assert.equal(deleteBasicService, null);
+});
+
+test("subscribe to a basic-service", async ({ client, assert }) => {
+  const basicService = await Factory.model("App/Models/BasicService").create();
+  const response = await client
+    .post(`/basic-services/${basicService.id}/subscribe`)
+    .loginVia(user)
+    .end();
+
+  response.assertStatus(201);
+  assert.equal(response.body.user_id, user.id);
+  assert.equal(response.body.basicServiceId, basicService.id);
+});
+
+test("unsubscribe to a basic-service", async ({ client, assert }) => {
+  const basicService = await Factory.model("App/Models/BasicService").create();
+
+  const basicServiceSubscriber = await user.basicServiceSubscribers().create({
+    basicServiceId: basicService.id,
+  });
+  const response = await client
+    .post(`/basic-services/${basicService.id}/unsubscribe`)
+    .loginVia(user)
+    .end();
+
+  response.assertStatus(201);
+  assert.equal(response.body.isClosed, basicService.isClosed);
+  assert.equal(response.body.maxPeople, basicService.maxPeople);
+  assert.equal(Date(response.body.startAt), Date(basicService.startAt));
+  assert.equal(Date(response.body.endAt), Date(basicService.endAt));
+  const reloadedbasicServiceSubscriber = await BasicServiceSubscriber.find(
+    basicServiceSubscriber.id
+  );
+  assert.equal(reloadedbasicServiceSubscriber, null);
 });
