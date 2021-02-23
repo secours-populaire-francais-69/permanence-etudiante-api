@@ -41,9 +41,13 @@ test("sign should return token infos when succeed and create the user", async ({
   const response = await client
     .post("/signup")
     .send({
-      username: "jean",
+      firstName: "jean",
+      lastName: "dujardin",
       email: "jean@spf.fr",
-      password: "password",
+      popAcceuilNumber: "4242",
+      isVolunteer: true,
+      isAdmin: true,
+      password: "password42",
     })
     .end();
 
