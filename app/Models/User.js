@@ -14,8 +14,16 @@ const Hash = use("Hash");
  *      properties:
  *        id:
  *          type: number
- *        usename:
+ *        firstName:
  *          type: string
+ *        lastName:
+ *          type: string
+ *        popAcceuilNumber:
+ *          type: string
+ *        isVolunteer:
+ *          type: boolean
+ *        isAdmin:
+ *          type: boolean
  *        email:
  *          type: string
  *          format: email
@@ -28,7 +36,11 @@ const Hash = use("Hash");
  *          type: string
  *          format: date-time
  *      required:
- *        - username
+ *        - firstName
+ *        - lastName
+ *        - popAcceuilNumber
+ *        - isVolunteer
+ *        - isAdmin
  *        - email
  */
 class User extends Model {
