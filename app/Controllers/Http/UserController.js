@@ -47,11 +47,9 @@ class UserController {
    */
   async login({ request, response, auth }) {
     try {
-      const user = await User.findByOrFail("email", request.body.email);
-      const token = await auth.attempt(
-        request.body.email,
-        request.body.password
-      );
+      const login = request.only(["email", "password"]);
+      const user = await User.findByOrFail("email", login.email);
+      const token = await auth.attempt(login.email, login.password);
       await user.tokens().create({
         token: token.token,
         type: token.type,
@@ -120,7 +118,16 @@ class UserController {
    */
   async signup({ request, auth, response }) {
     try {
-      const user = await User.create(request.body);
+      const userParams = request.only([
+        "firstName",
+        "lastName",
+        "popAcceuilNumber",
+        "isVolunteer",
+        "isAdmin",
+        "email",
+        "password",
+      ]);
+      const user = await User.create(userParams);
       const token = await auth.generate(user);
       await user.tokens().create({
         token: token.token,
@@ -199,15 +206,8 @@ class UserController {
    *         description: server error
    */
   async forgottenPassword({ request, response }) {
-    if (!request.body.forgottenPassword?.email) {
-      return response.status(400).json({
-        status: "missing params",
-      });
-    }
-    const user = await User.findBy(
-      "email",
-      request.body.forgottenPassword.email
-    );
+    const { forgottenPassword } = request.only(["forgottenPassword.email"]);
+    const user = await User.findBy("email", forgottenPassword.email);
     if (!user) {
       return response.status(201).json({
         status: "success",
@@ -271,17 +271,16 @@ class UserController {
    */
   async resetPassword({ request, response, auth }) {
     try {
-      const userId = User.verifyPasswordToken(
-        request.body.resetPassword.resetPasswordToken
-      );
+      const { resetPassword } = request.only([
+        "resetPassword.resetPasswordToken",
+        "resetPassword.password",
+      ]);
+      const userId = User.verifyPasswordToken(resetPassword.resetPasswordToken);
       const user = await User.find(userId);
-      if (
-        user?.resetPasswordToken !==
-        request.body.resetPassword.resetPasswordToken
-      ) {
+      if (user?.resetPasswordToken !== resetPassword.resetPasswordToken) {
         throw "invalid token";
       }
-      user.password = request.body.resetPassword.password;
+      user.password = resetPassword.password;
       user.resetPasswordToken = null;
       await user.save();
       const token = await auth.generate(user);
