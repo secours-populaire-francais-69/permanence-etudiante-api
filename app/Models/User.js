@@ -1,10 +1,15 @@
 "use strict";
 
+const Env = use("Env");
+const resetPasswordPrivateKey = Env.get("RESET_PASSWORD_PRIVATE_KEY");
+
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use("Model");
 
 /** @type {import('@adonisjs/framework/src/Hash')} */
 const Hash = use("Hash");
+
+const jwt = require("jsonwebtoken");
 
 /**
  *  @swagger
@@ -44,6 +49,13 @@ const Hash = use("Hash");
  *        - email
  */
 class User extends Model {
+  static get computed() {
+    return ["fullName"];
+  }
+
+  getFullName({ firstName, lastName }) {
+    return `${firstName} ${lastName}`;
+  }
   static boot() {
     super.boot();
 
@@ -71,6 +83,12 @@ class User extends Model {
 
   static get hidden() {
     return ["password"];
+  }
+
+  generatePasswordToken() {
+    return jwt.sign({ userId: this.id }, resetPasswordPrivateKey, {
+      expiresIn: "1h",
+    });
   }
 
   /**

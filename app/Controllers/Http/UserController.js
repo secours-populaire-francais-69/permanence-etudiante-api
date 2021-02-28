@@ -1,5 +1,8 @@
 "use strict";
 const User = use("App/Models/User");
+const mailer = use("App/Helpers/Mailer");
+const Env = use("Env");
+const frontUrl = Env.get("FRONT_URL");
 
 class UserController {
   /**
@@ -158,6 +161,74 @@ class UserController {
   async whoami({ auth, response }) {
     const currentUser = await auth.getUser();
     response.status(200).json(currentUser);
+  }
+
+  /**
+   * @swagger
+   * /forgotten-password:
+   *   post:
+   *     summary: rest api get mail to reset user password
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: forgottenPassword
+   *         description: object containing forgot password info
+   *         in:  body
+   *         required: true
+   *         type: string
+   *         schema:
+   *           type: object
+   *           properties:
+   *             forgottenPassword:
+   *               type: object
+   *               properties:
+   *                 email:
+   *                   type: string
+   *                   format: email
+   *     responses:
+   *       201:
+   *         description: email has been sent
+   *         schema:
+   *           type: object
+   *           properties:
+   *             status:
+   *               type: string
+   *       400:
+   *         description: missing params
+   *       500:
+   *         description: server error
+   */
+  async forgottenPassword({ request, response }) {
+    if (!request.body.forgottenPassword?.email) {
+      return response.status(400).json({
+        status: "missing params",
+      });
+    }
+    const user = await User.findBy(
+      "email",
+      request.body.forgottenPassword.email
+    );
+    if (!user) {
+      return response.status(201).json({
+        status: "success",
+      });
+    }
+    const resetPasswordToken = await user.generatePasswordToken();
+    user.resetPasswordToken = resetPasswordToken;
+    await user.save();
+    const test = await mailer({
+      to: [{ Email: user.email, Name: user.fullName }],
+      subjbect: "Réinitialisation de mot de passe",
+      templateId: 2526270,
+      templateLanguage: true,
+      variables: {
+        firstName: user.firstName,
+        resetPasswordLink: `${frontUrl}/reset-password?token=${resetPasswordToken}`,
+      },
+    });
+    return response.status(201).json({
+      status: "success",
+    });
   }
 }
 
