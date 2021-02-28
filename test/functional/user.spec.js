@@ -89,3 +89,44 @@ test("get detail of a whoami", async ({ client }) => {
     email: user.email,
   });
 });
+
+test("send reset password mail", async ({ client, assert }) => {
+  const user = await Factory.model("App/Models/User").create();
+  const response = await client
+    .post("forgotten-password")
+    .send({
+      forgottenPassword: {
+        email: user.email,
+      },
+    })
+    .end();
+
+  response.assertStatus(201);
+  response.assertJSONSubset({
+    status: "success",
+  });
+  await user.reload();
+  assert.isNotNull(user.resetPasswordToken);
+});
+
+test("fake send reset password mail when user is not found", async ({
+  client,
+  assert,
+}) => {
+  const user = await Factory.model("App/Models/User").create();
+  const response = await client
+    .post("forgotten-password")
+    .send({
+      forgottenPassword: {
+        email: `whatever${user.email}`,
+      },
+    })
+    .end();
+
+  response.assertStatus(201);
+  response.assertJSONSubset({
+    status: "success",
+  });
+  await user.reload();
+  assert.equal(user.resetPasswordToken, null);
+});
