@@ -130,3 +130,57 @@ test("fake send reset password mail when user is not found", async ({
   await user.reload();
   assert.equal(user.resetPasswordToken, null);
 });
+
+test("reset password", async ({ client, assert }) => {
+  const user = await Factory.model("App/Models/User").create();
+  const resetPasswordToken = user.generatePasswordToken();
+  user.resetPasswordToken = resetPasswordToken;
+  await user.save();
+  const response = await client
+    .post("reset-password")
+    .send({
+      resetPassword: {
+        resetPasswordToken,
+        password: "whatever",
+      },
+    })
+    .end();
+
+  const tokens = await user.tokens().fetch();
+  response.assertStatus(201);
+  response.assertJSONSubset({
+    status: "success",
+    data: {
+      type: "bearer",
+      token: tokens.rows[tokens.rows.length - 1].token,
+      refreshToken: null,
+    },
+  });
+  await user.reload();
+  assert.equal(user.resetPasswordToken, null);
+});
+
+test("reset password with wrong params", async ({ client, assert }) => {
+  const user = await Factory.model("App/Models/User").create();
+  const resetPasswordToken = user.generatePasswordToken();
+  user.resetPasswordToken = resetPasswordToken;
+  await user.save();
+  const response = await client
+    .post("reset-password")
+    .send({
+      resetPassword: {
+        resetPasswordToken: "wrongtoken",
+        password: "whatever",
+      },
+    })
+    .end();
+
+  const tokens = await user.tokens().fetch();
+  response.assertStatus(400);
+  response.assertJSONSubset({
+    status: "error",
+    message: "Invalid reset password",
+  });
+  await user.reload();
+  assert.isNotNull(user.resetPasswordToken);
+});

@@ -230,6 +230,76 @@ class UserController {
       status: "success",
     });
   }
+
+  /**
+   * @swagger
+   * /reset-password:
+   *   post:
+   *     summary: rest api to reset user password
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: resetPassword
+   *         description: object containing new password info
+   *         in:  body
+   *         required: true
+   *         type: string
+   *         schema:
+   *           type: object
+   *           properties:
+   *             resetPassword:
+   *               type: object
+   *               properties:
+   *                 password:
+   *                   type: string
+   *                 resetPasswordToken:
+   *                   type: string
+   *     responses:
+   *       201:
+   *         description: user password has been changed
+   *         schema:
+   *           type: object
+   *           properties:
+   *             status:
+   *               type: string
+   *             data:
+   *               type: string
+   *       400:
+   *         description: missing params
+   *       500:
+   *         description: server error
+   */
+  async resetPassword({ request, response, auth }) {
+    try {
+      const userId = User.verifyPasswordToken(
+        request.body.resetPassword.resetPasswordToken
+      );
+      const user = await User.find(userId);
+      if (
+        user?.resetPasswordToken !==
+        request.body.resetPassword.resetPasswordToken
+      ) {
+        throw "invalid token";
+      }
+      user.password = request.body.resetPassword.password;
+      user.resetPasswordToken = null;
+      await user.save();
+      const token = await auth.generate(user);
+      await user.tokens().create({
+        token: token.token,
+        type: token.type,
+      });
+      return response.status(201).json({
+        status: "success",
+        data: token,
+      });
+    } catch {
+      response.status(400).json({
+        status: "error",
+        message: "Invalid reset password",
+      });
+    }
+  }
 }
 
 module.exports = UserController;

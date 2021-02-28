@@ -91,6 +91,11 @@ class User extends Model {
     });
   }
 
+  static verifyPasswordToken(token) {
+    const decodedToken = jwt.verify(token, resetPasswordPrivateKey);
+    return decodedToken.userId;
+  }
+
   /**
    * A relationship on tokens is required for auth to
    * work. Since features like `refreshTokens` or

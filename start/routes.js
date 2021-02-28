@@ -22,6 +22,7 @@ Route.get("/", () => {
 Route.post("login", "UserController.login");
 Route.post("signup", "UserController.signup");
 Route.post("forgotten-password", "UserController.forgottenPassword");
+Route.post("reset-password", "UserController.resetPassword");
 
 Route.get("whoami", "UserController.whoami").middleware(["auth:jwt"]);
 Route.resource("basic-services", "BasicServiceController").middleware([
