@@ -20,7 +20,9 @@ Route.get("/", () => {
 });
 
 Route.post("login", "UserController.login").validator("Login");
-Route.post("signup", "UserController.signup").validator("Signup");
+Route.post("signup", "UserController.signup")
+  .validator("Signup")
+  .middleware(["auth:jwt", "role:volunteer"]);
 Route.post("forgotten-password", "UserController.forgottenPassword").validator(
   "ForgottenPassword"
 );
@@ -30,7 +32,15 @@ Route.post("reset-password", "UserController.resetPassword").validator(
 
 Route.get("whoami", "UserController.whoami").middleware(["auth:jwt"]);
 Route.resource("basic-services", "BasicServiceController")
-  .middleware(["auth:jwt"])
+  .middleware(
+    new Map([
+      [["store"], ["auth:jwt", "role:volunteer"]],
+      [["update"], ["auth:jwt", "role:volunteer"]],
+      [["destroy"], ["auth:jwt", "role:volunteer"]],
+      [["index"], ["auth:jwt"]],
+      [["show"], ["auth:jwt"]],
+    ])
+  )
   .validator(
     new Map([
       [["basicService.store"], ["BasicService"]],
