@@ -13,13 +13,13 @@
 
 const Factory = use("Factory");
 
-Factory.blueprint("App/Models/User", async (faker) => {
+Factory.blueprint("App/Models/User", async (faker, i, { isVolunteer }) => {
   return {
     firstName: faker.first(),
     lastName: faker.last(),
     popAcceuilNumber: faker.fbid(),
-    isVolunteer: true,
-    isAdmin: true,
+    isVolunteer: isVolunteer || false,
+    isAdmin: false,
     email: faker.email(),
     password: "password",
   };
