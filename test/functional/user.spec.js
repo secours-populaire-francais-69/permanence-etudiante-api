@@ -35,7 +35,7 @@ test("login should return 401 when wrong credential", async ({ client }) => {
   response.assertStatus(400);
 });
 
-test("sign should return token infos when succeed and create the user", async ({
+test("sign should return 401 when user is not logged in", async ({
   client,
 }) => {
   const response = await client
@@ -49,6 +49,50 @@ test("sign should return token infos when succeed and create the user", async ({
       isAdmin: true,
       password: "password42",
     })
+    .end();
+
+  response.assertStatus(401);
+});
+
+test("sign should return 401 when user is logged in as student", async ({
+  client,
+}) => {
+  const user = await Factory.model("App/Models/User").create();
+  const response = await client
+    .post("/signup")
+    .send({
+      firstName: "jean",
+      lastName: "dujardin",
+      email: "jean@spf.fr",
+      popAcceuilNumber: "4242",
+      isVolunteer: true,
+      isAdmin: true,
+      password: "password42",
+    })
+    .loginVia(user)
+    .end();
+
+  response.assertStatus(401);
+});
+
+test("when volunteer is logged in sign should return token infos when succeed and create the user", async ({
+  client,
+}) => {
+  const volunteer = await Factory.model("App/Models/User").create({
+    isVolunteer: true,
+  });
+  const response = await client
+    .post("/signup")
+    .send({
+      firstName: "jean",
+      lastName: "dujardin",
+      email: "jean@spf.fr",
+      popAcceuilNumber: "4242",
+      isVolunteer: true,
+      isAdmin: true,
+      password: "password42",
+    })
+    .loginVia(volunteer)
     .end();
 
   const user = await User.findBy("email", "jean@spf.fr");
@@ -175,7 +219,6 @@ test("reset password with wrong params", async ({ client, assert }) => {
     })
     .end();
 
-  const tokens = await user.tokens().fetch();
   response.assertStatus(400);
   response.assertJSONSubset({
     status: "error",
