@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node server.js",
     "prettier": "./node_modules/.bin/prettier --write --config .prettierrc --ignore-path .prettierignore .",
-    "test": "node ace test"
+    "test": "node ace test -t 10000"
   },
   "keywords": [
     "Secours populaire français",
