@@ -44,7 +44,23 @@ Route.resource("basic-services", "BasicServiceController")
   .validator(
     new Map([
       [["basicService.store"], ["BasicService"]],
-      [["basicService.update"], ["BasicServicet"]],
+      [["basicService.update"], ["BasicService"]],
+    ])
+  );
+Route.resource("posts", "PostController")
+  .middleware(
+    new Map([
+      [["store"], ["auth:jwt", "role:volunteer"]],
+      [["update"], ["auth:jwt", "role:volunteer"]],
+      [["destroy"], ["auth:jwt", "role:volunteer"]],
+      [["index"], ["auth:jwt"]],
+      [["show"], ["auth:jwt"]],
+    ])
+  )
+  .validator(
+    new Map([
+      [["post.store"], ["Post"]],
+      [["post.update"], ["Post"]],
     ])
   );
 Route.post(

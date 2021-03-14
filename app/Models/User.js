@@ -77,6 +77,10 @@ class User extends Model {
     );
   }
 
+  posts() {
+    return this.hasMany("App/Models/Post");
+  }
+
   basicServiceSubscribers() {
     return this.hasMany("App/Models/BasicServiceSubscriber");
   }

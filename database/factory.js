@@ -25,6 +25,14 @@ Factory.blueprint("App/Models/User", async (faker, i, { isVolunteer }) => {
   };
 });
 
+Factory.blueprint("App/Models/Post", async (faker, i, { isForVolunteers }) => {
+  return {
+    content: faker.first(),
+    title: faker.last(),
+    isForVolunteers: isForVolunteers || false,
+  };
+});
+
 Factory.blueprint("App/Models/BasicService", async (faker) => {
   return {
     startAt: faker.date(),
