@@ -1,4 +1,4 @@
-"use strict";
+'use strict'
 
 /*
 |--------------------------------------------------------------------------
@@ -11,14 +11,14 @@
 |
 */
 const providers = [
-  "@adonisjs/framework/providers/AppProvider",
-  "@adonisjs/auth/providers/AuthProvider",
-  "@adonisjs/bodyparser/providers/BodyParserProvider",
-  "@adonisjs/cors/providers/CorsProvider",
-  "@adonisjs/lucid/providers/LucidProvider",
-  "adonis-swagger/providers/SwaggerProvider",
-  "@adonisjs/validator/providers/ValidatorProvider",
-];
+  '@adonisjs/framework/providers/AppProvider',
+  '@adonisjs/auth/providers/AuthProvider',
+  '@adonisjs/bodyparser/providers/BodyParserProvider',
+  '@adonisjs/cors/providers/CorsProvider',
+  '@adonisjs/lucid/providers/LucidProvider',
+  'adonis-swagger/providers/SwaggerProvider',
+  '@adonisjs/validator/providers/ValidatorProvider'
+]
 
 /*
 |--------------------------------------------------------------------------
@@ -30,9 +30,9 @@ const providers = [
 |
 */
 const aceProviders = [
-  "@adonisjs/lucid/providers/MigrationsProvider",
-  "@adonisjs/vow/providers/VowProvider",
-];
+  '@adonisjs/lucid/providers/MigrationsProvider',
+  '@adonisjs/vow/providers/VowProvider'
+]
 
 /*
 |--------------------------------------------------------------------------
@@ -46,7 +46,7 @@ const aceProviders = [
 |   { Route: 'Adonis/Src/Route' }
 |
 */
-const aliases = {};
+const aliases = {}
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +56,6 @@ const aliases = {};
 | Here you store ace commands for your package
 |
 */
-const commands = [];
+const commands = []
 
-module.exports = { providers, aceProviders, aliases, commands };
+module.exports = { providers, aceProviders, aliases, commands }

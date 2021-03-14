@@ -1,11 +1,11 @@
-"use strict";
+'use strict'
 
 class ForgottenPassword {
   get rules() {
     return {
-      "forgottenPassword.email": "required|email",
-    };
+      'forgottenPassword.email': 'required|email'
+    }
   }
 }
 
-module.exports = ForgottenPassword;
+module.exports = ForgottenPassword

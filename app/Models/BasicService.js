@@ -1,7 +1,7 @@
-"use strict";
+'use strict'
 
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
-const Model = use("Model");
+const Model = use('Model')
 
 /**
  *  @swagger
@@ -32,16 +32,16 @@ const Model = use("Model");
  */
 class BasicService extends Model {
   static get dates() {
-    return super.dates.concat(["startAt", "endAt"]);
+    return super.dates.concat(['startAt', 'endAt'])
   }
 
   users() {
-    return this.manyThrough("App/Models/BasicServiceSubscriber", "users");
+    return this.manyThrough('App/Models/BasicServiceSubscriber', 'users')
   }
 
   basicServiceSubscribers() {
-    return this.hasMany("App/Models/BasicServiceSubscriber");
+    return this.hasMany('App/Models/BasicServiceSubscriber')
   }
 }
 
-module.exports = BasicService;
+module.exports = BasicService

@@ -1,4 +1,4 @@
-"use strict";
+'use strict'
 
 module.exports = {
   /*
@@ -10,33 +10,33 @@ module.exports = {
   */
 
   enable: true,
-  specUrl: "/swagger.json",
+  specUrl: '/swagger.json',
 
   options: {
     swaggerDefinition: {
       info: {
-        title: "Permance etudiante",
-        version: "1.0.0",
+        title: 'Permance etudiante',
+        version: '1.0.0'
       },
 
       securitySchemes: {
         bearerAuth: {
-          type: "http",
-          scheme: "bearer",
-          bearerFormat: "JWT",
-        },
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT'
+        }
       },
 
-      basePath: "/",
+      basePath: '/',
 
       // Example security definitions.
       securityDefinitions: {
         bearerAuth: {
-          type: "apiKey",
-          in: "header",
-          name: "Authorization",
-        },
-      },
+          type: 'apiKey',
+          in: 'header',
+          name: 'Authorization'
+        }
+      }
     },
 
     // Path to the API docs
@@ -45,7 +45,6 @@ module.exports = {
     //    'docs/**/*.yml',    // load recursive all .yml file in docs directory
     //    'docs/**/*.js',     // load recursive all .js file in docs directory
     // ]
-    apis: ["app/**/*.js", "start/routes.js"],
-  },
-};
-
+    apis: ['app/**/*.js', 'start/routes.js']
+  }
+}

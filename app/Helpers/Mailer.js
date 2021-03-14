@@ -1,8 +1,8 @@
-const Env = use("Env");
-const mailPublicKey = Env.get("MAILJET_PUBLIC_KEY");
-const mailPrivateKey = Env.get("MAILJET_PRIVATE_KEY");
-const nodeEnv = Env.get("NODE_ENV");
-const mailjet = require("node-mailjet").connect(mailPublicKey, mailPrivateKey);
+const Env = use('Env')
+const mailPublicKey = Env.get('MAILJET_PUBLIC_KEY')
+const mailPrivateKey = Env.get('MAILJET_PRIVATE_KEY')
+const nodeEnv = Env.get('NODE_ENV')
+const mailjet = require('node-mailjet').connect(mailPublicKey, mailPrivateKey)
 
 /**
  *  @swagger
@@ -42,24 +42,24 @@ const mailer = async ({
   subjbect: Subject,
   templateId: TemplateId,
   templateLanguage: TemplateLanguage,
-  variables: Variables,
+  variables: Variables
 }) => {
-  if (nodeEnv === "testing") return true;
-  return mailjet.post("send", { version: "v3.1" }).request({
+  if (nodeEnv === 'testing') return true
+  return mailjet.post('send', { version: 'v3.1' }).request({
     Messages: [
       {
         From: {
-          Email: "quentin.basset@querio.fr",
-          Name: "spf",
+          Email: 'quentin.basset@querio.fr',
+          Name: 'spf'
         },
         To,
         Subject,
         TemplateId,
         TemplateLanguage,
-        Variables,
-      },
-    ],
-  });
-};
+        Variables
+      }
+    ]
+  })
+}
 
-module.exports = mailer;
+module.exports = mailer

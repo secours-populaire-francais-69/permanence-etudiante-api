@@ -1,4 +1,4 @@
-"use strict";
+'use strict'
 
 /*
 |--------------------------------------------------------------------------
@@ -11,9 +11,9 @@
 |
 */
 
-const Factory = use("Factory");
+const Factory = use('Factory')
 
-Factory.blueprint("App/Models/User", async (faker, i, { isVolunteer }) => {
+Factory.blueprint('App/Models/User', async (faker, i, { isVolunteer }) => {
   return {
     firstName: faker.first(),
     lastName: faker.last(),
@@ -21,23 +21,23 @@ Factory.blueprint("App/Models/User", async (faker, i, { isVolunteer }) => {
     isVolunteer: isVolunteer || false,
     isAdmin: false,
     email: faker.email(),
-    password: "password",
-  };
-});
+    password: 'password'
+  }
+})
 
-Factory.blueprint("App/Models/Post", async (faker, i, { isForVolunteers }) => {
+Factory.blueprint('App/Models/Post', async (faker, i, { isForVolunteers }) => {
   return {
     content: faker.first(),
     title: faker.last(),
-    isForVolunteers: isForVolunteers || false,
-  };
-});
+    isForVolunteers: isForVolunteers || false
+  }
+})
 
-Factory.blueprint("App/Models/BasicService", async (faker) => {
+Factory.blueprint('App/Models/BasicService', async (faker) => {
   return {
     startAt: faker.date(),
     endAt: faker.date(),
     maxPeople: faker.integer({ min: 1, max: 50 }),
-    isClosed: faker.bool(),
-  };
-});
+    isClosed: faker.bool()
+  }
+})
