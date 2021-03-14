@@ -1,6 +1,6 @@
-"use strict";
+'use strict'
 
-const Model = use("Model");
+const Model = use('Model')
 
 /**
  *  @swagger
@@ -32,8 +32,8 @@ const Model = use("Model");
  */
 class Post extends Model {
   user() {
-    return this.belongsTo("App/Models/User");
+    return this.belongsTo('App/Models/User')
   }
 }
 
-module.exports = Post;
+module.exports = Post

@@ -1,6 +1,6 @@
-"use strict";
+'use strict'
 
-const BasicService = use("App/Models/BasicService");
+const BasicService = use('App/Models/BasicService')
 
 /**
  * Resourceful controller for interacting with basic-services
@@ -28,8 +28,8 @@ class BasicServiceController {
    *         description: server error
    */
   async index({ response }) {
-    const basicServices = await BasicService.all();
-    response.status(200).json(basicServices);
+    const basicServices = await BasicService.all()
+    response.status(200).json(basicServices)
   }
 
   /**
@@ -77,13 +77,13 @@ class BasicServiceController {
    */
   async store({ request, response }) {
     const { basicService } = request.only([
-      "basicService.startAt",
-      "basicService.endAt",
-      "basicService.maxPeople",
-      "basicService.isClosed",
-    ]);
-    const createdBasicService = await BasicService.create(basicService);
-    response.status(201).json(createdBasicService);
+      'basicService.startAt',
+      'basicService.endAt',
+      'basicService.maxPeople',
+      'basicService.isClosed'
+    ])
+    const createdBasicService = await BasicService.create(basicService)
+    response.status(201).json(createdBasicService)
   }
 
   /**
@@ -113,8 +113,8 @@ class BasicServiceController {
    *         description: server error
    */
   async show({ params, response }) {
-    const basicService = await BasicService.findOrFail(params.id);
-    response.status(200).json(basicService);
+    const basicService = await BasicService.findOrFail(params.id)
+    response.status(200).json(basicService)
   }
 
   /**
@@ -165,16 +165,16 @@ class BasicServiceController {
    *         description: server error
    */
   async update({ params, request, response }) {
-    const basicServiceToUpdate = await BasicService.findOrFail(params.id);
+    const basicServiceToUpdate = await BasicService.findOrFail(params.id)
     const { basicService } = request.only([
-      "basicService.startAt",
-      "basicService.endAt",
-      "basicService.maxPeople",
-      "basicService.isClosed",
-    ]);
-    basicServiceToUpdate.merge(basicService);
-    await basicServiceToUpdate.save();
-    response.status(200).json(basicServiceToUpdate);
+      'basicService.startAt',
+      'basicService.endAt',
+      'basicService.maxPeople',
+      'basicService.isClosed'
+    ])
+    basicServiceToUpdate.merge(basicService)
+    await basicServiceToUpdate.save()
+    response.status(200).json(basicServiceToUpdate)
   }
 
   /**
@@ -204,9 +204,9 @@ class BasicServiceController {
    *         description: server error
    */
   async destroy({ params, response }) {
-    const basicServiceToDelete = await BasicService.findOrFail(params.id);
-    await basicServiceToDelete.delete();
-    response.status(200).json(basicServiceToDelete);
+    const basicServiceToDelete = await BasicService.findOrFail(params.id)
+    await basicServiceToDelete.delete()
+    response.status(200).json(basicServiceToDelete)
   }
 
   /**
@@ -234,15 +234,15 @@ class BasicServiceController {
    *         description: server error
    */
   async subscribe({ params, auth, response }) {
-    const basicService = await BasicService.findOrFail(params.id);
-    const currentUser = await auth.getUser();
+    const basicService = await BasicService.findOrFail(params.id)
+    const currentUser = await auth.getUser()
     const basicServiceSubscriber = await currentUser
       .basicServiceSubscribers()
       .create({
-        basicServiceId: basicService.id,
-      });
+        basicServiceId: basicService.id
+      })
 
-    response.status(201).json(basicServiceSubscriber);
+    response.status(201).json(basicServiceSubscriber)
   }
 
   /**
@@ -270,15 +270,15 @@ class BasicServiceController {
    *         description: server error
    */
   async unsubscribe({ params, auth, response }) {
-    const basicService = await BasicService.findOrFail(params.id);
-    const currentUser = await auth.getUser();
+    const basicService = await BasicService.findOrFail(params.id)
+    const currentUser = await auth.getUser()
     await currentUser
       .basicServiceSubscribers()
-      .where("basicServiceId", basicService.id)
-      .delete();
+      .where('basicServiceId', basicService.id)
+      .delete()
 
-    response.status(201).json(basicService);
+    response.status(201).json(basicService)
   }
 }
 
-module.exports = BasicServiceController;
+module.exports = BasicServiceController

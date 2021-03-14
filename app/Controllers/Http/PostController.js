@@ -1,6 +1,6 @@
-"use strict";
+'use strict'
 
-const Post = use("App/Models/Post");
+const Post = use('App/Models/Post')
 
 class PostController {
   /**
@@ -25,8 +25,8 @@ class PostController {
    *         description: server error
    */
   async index({ response }) {
-    const posts = await Post.all();
-    response.status(200).json(posts);
+    const posts = await Post.all()
+    response.status(200).json(posts)
   }
 
   /**
@@ -72,13 +72,13 @@ class PostController {
    */
   async store({ request, response, auth }) {
     const { post } = request.only([
-      "post.content",
-      "post.title",
-      "post.isForVolunteers",
-    ]);
-    const currentUser = await auth.getUser();
-    const createdPost = await currentUser.posts().create(post);
-    response.status(201).json(createdPost);
+      'post.content',
+      'post.title',
+      'post.isForVolunteers'
+    ])
+    const currentUser = await auth.getUser()
+    const createdPost = await currentUser.posts().create(post)
+    response.status(201).json(createdPost)
   }
 
   /**
@@ -108,8 +108,8 @@ class PostController {
    *         description: server error
    */
   async show({ params, response }) {
-    const post = await Post.findOrFail(params.id);
-    response.status(200).json(post);
+    const post = await Post.findOrFail(params.id)
+    response.status(200).json(post)
   }
 
   /**
@@ -158,15 +158,15 @@ class PostController {
    *         description: server error
    */
   async update({ params, request, response }) {
-    const postToUpdate = await Post.findOrFail(params.id);
+    const postToUpdate = await Post.findOrFail(params.id)
     const { post } = request.only([
-      "post.content",
-      "post.title",
-      "post.isForVolunteers",
-    ]);
-    postToUpdate.merge(post);
-    await postToUpdate.save();
-    response.status(200).json(postToUpdate);
+      'post.content',
+      'post.title',
+      'post.isForVolunteers'
+    ])
+    postToUpdate.merge(post)
+    await postToUpdate.save()
+    response.status(200).json(postToUpdate)
   }
 
   /**
@@ -196,10 +196,10 @@ class PostController {
    *         description: server error
    */
   async destroy({ params, response }) {
-    const postToDelete = await Post.findOrFail(params.id);
-    await postToDelete.delete();
-    response.status(200).json(postToDelete);
+    const postToDelete = await Post.findOrFail(params.id)
+    await postToDelete.delete()
+    response.status(200).json(postToDelete)
   }
 }
 
-module.exports = PostController;
+module.exports = PostController

@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
+    "prettier": "./node_modules/.bin/prettier --write --config .prettierrc --ignore-path .prettierignore .",
     "test": "node ace test"
   },
   "keywords": [
@@ -35,5 +36,15 @@
   },
   "autoload": {
     "App": "./app"
+  },
+  "devDependencies": {
+    "eslint": "^7.22.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-promise": "^4.3.1",
+    "prettier": "^2.2.1"
   }
 }

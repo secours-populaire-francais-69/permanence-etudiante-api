@@ -1,6 +1,6 @@
-"use strict";
+'use strict'
 
-const Model = use("Model");
+const Model = use('Model')
 
 /**
  *  @swagger
@@ -26,12 +26,12 @@ const Model = use("Model");
  */
 class BasicServiceSubscriber extends Model {
   basicServices() {
-    return this.belongsToMany("App/Models/BasicService");
+    return this.belongsToMany('App/Models/BasicService')
   }
 
   users() {
-    return this.belongsToMany("App/Models/User");
+    return this.belongsToMany('App/Models/User')
   }
 }
 
-module.exports = BasicServiceSubscriber;
+module.exports = BasicServiceSubscriber

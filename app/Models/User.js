@@ -1,15 +1,15 @@
-"use strict";
+'use strict'
 
-const Env = use("Env");
-const resetPasswordPrivateKey = Env.get("RESET_PASSWORD_PRIVATE_KEY");
+const Env = use('Env')
+const resetPasswordPrivateKey = Env.get('RESET_PASSWORD_PRIVATE_KEY')
 
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
-const Model = use("Model");
+const Model = use('Model')
 
 /** @type {import('@adonisjs/framework/src/Hash')} */
-const Hash = use("Hash");
+const Hash = use('Hash')
 
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken')
 
 /**
  *  @swagger
@@ -50,54 +50,54 @@ const jwt = require("jsonwebtoken");
  */
 class User extends Model {
   static get computed() {
-    return ["fullName"];
+    return ['fullName']
   }
 
   getFullName({ firstName, lastName }) {
-    return `${firstName} ${lastName}`;
+    return `${firstName} ${lastName}`
   }
   static boot() {
-    super.boot();
+    super.boot()
 
     /**
      * A hook to hash the user password before saving
      * it to the database.
      */
-    this.addHook("beforeSave", async (userInstance) => {
+    this.addHook('beforeSave', async (userInstance) => {
       if (userInstance.dirty.password) {
-        userInstance.password = await Hash.make(userInstance.password);
+        userInstance.password = await Hash.make(userInstance.password)
       }
-    });
+    })
   }
 
   basicServices() {
     return this.manyThrough(
-      "App/Models/BasicServiceSubscriber",
-      "basicServices"
-    );
+      'App/Models/BasicServiceSubscriber',
+      'basicServices'
+    )
   }
 
   posts() {
-    return this.hasMany("App/Models/Post");
+    return this.hasMany('App/Models/Post')
   }
 
   basicServiceSubscribers() {
-    return this.hasMany("App/Models/BasicServiceSubscriber");
+    return this.hasMany('App/Models/BasicServiceSubscriber')
   }
 
   static get hidden() {
-    return ["password"];
+    return ['password']
   }
 
   generatePasswordToken() {
     return jwt.sign({ userId: this.id }, resetPasswordPrivateKey, {
-      expiresIn: "1h",
-    });
+      expiresIn: '1h'
+    })
   }
 
   static verifyPasswordToken(token) {
-    const decodedToken = jwt.verify(token, resetPasswordPrivateKey);
-    return decodedToken.userId;
+    const decodedToken = jwt.verify(token, resetPasswordPrivateKey)
+    return decodedToken.userId
   }
 
   /**
@@ -111,8 +111,8 @@ class User extends Model {
    * @return {Object}
    */
   tokens() {
-    return this.hasMany("App/Models/Token");
+    return this.hasMany('App/Models/Token')
   }
 }
 
-module.exports = User;
+module.exports = User

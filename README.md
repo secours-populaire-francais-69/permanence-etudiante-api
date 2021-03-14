@@ -24,16 +24,19 @@ docker-compose up
 ```
 
 install backend
+
 ```bash
 npm install
 ```
 
 set env
+
 ```bash
 cp .env.example .env
 ```
 
 run database migrations
+
 ```bash
 node ace migration:run
 ```
@@ -41,6 +44,7 @@ node ace migration:run
 ## Start
 
 start backend server
+
 ```bash
 npm start
 ```
@@ -48,6 +52,7 @@ npm start
 ## Tests
 
 run test suite
+
 ```bash
 npm run test
 ```
@@ -55,6 +60,7 @@ npm run test
 ## Documentation
 
 check the url
+
 ```bash
 http://127.0.0.1:3333/docs/
 ```

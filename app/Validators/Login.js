@@ -1,12 +1,12 @@
-"use strict";
+'use strict'
 
 class Login {
   get rules() {
     return {
-      email: "required|email",
-      password: "required|string",
-    };
+      email: 'required|email',
+      password: 'required|string'
+    }
   }
 }
 
-module.exports = Login;
+module.exports = Login

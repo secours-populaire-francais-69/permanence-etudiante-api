@@ -1,8 +1,8 @@
-"use strict";
-const User = use("App/Models/User");
-const mailer = use("App/Helpers/Mailer");
-const Env = use("Env");
-const frontUrl = Env.get("FRONT_URL");
+'use strict'
+const User = use('App/Models/User')
+const mailer = use('App/Helpers/Mailer')
+const Env = use('Env')
+const frontUrl = Env.get('FRONT_URL')
 
 class UserController {
   /**
@@ -47,22 +47,22 @@ class UserController {
    */
   async login({ request, response, auth }) {
     try {
-      const login = request.only(["email", "password"]);
-      const user = await User.findByOrFail("email", login.email);
-      const token = await auth.attempt(login.email, login.password);
+      const login = request.only(['email', 'password'])
+      const user = await User.findByOrFail('email', login.email)
+      const token = await auth.attempt(login.email, login.password)
       await user.tokens().create({
         token: token.token,
-        type: token.type,
-      });
+        type: token.type
+      })
       return response.status(201).json({
-        status: "success",
-        data: token,
-      });
+        status: 'success',
+        data: token
+      })
     } catch (error) {
       response.status(400).json({
-        status: "error",
-        message: "Invalid email/password",
-      });
+        status: 'error',
+        message: 'Invalid email/password'
+      })
     }
   }
 
@@ -119,30 +119,30 @@ class UserController {
   async signup({ request, auth, response }) {
     try {
       const userParams = request.only([
-        "firstName",
-        "lastName",
-        "popAcceuilNumber",
-        "isVolunteer",
-        "isAdmin",
-        "email",
-        "password",
-      ]);
-      const user = await User.create(userParams);
-      const token = await auth.generate(user);
+        'firstName',
+        'lastName',
+        'popAcceuilNumber',
+        'isVolunteer',
+        'isAdmin',
+        'email',
+        'password'
+      ])
+      const user = await User.create(userParams)
+      const token = await auth.generate(user)
       await user.tokens().create({
         token: token.token,
-        type: token.type,
-      });
+        type: token.type
+      })
       return response.status(201).json({
-        status: "success",
-        data: token,
-      });
+        status: 'success',
+        data: token
+      })
     } catch (error) {
       return response.status(400).json({
-        status: "error",
+        status: 'error',
         message:
-          "There was a problem creating the user, please try again later.",
-      });
+          'There was a problem creating the user, please try again later.'
+      })
     }
   }
 
@@ -166,8 +166,8 @@ class UserController {
    *         description: server error
    */
   async whoami({ auth, response }) {
-    const currentUser = await auth.getUser();
-    response.status(200).json(currentUser);
+    const currentUser = await auth.getUser()
+    response.status(200).json(currentUser)
   }
 
   /**
@@ -206,29 +206,29 @@ class UserController {
    *         description: server error
    */
   async forgottenPassword({ request, response }) {
-    const { forgottenPassword } = request.only(["forgottenPassword.email"]);
-    const user = await User.findBy("email", forgottenPassword.email);
+    const { forgottenPassword } = request.only(['forgottenPassword.email'])
+    const user = await User.findBy('email', forgottenPassword.email)
     if (!user) {
       return response.status(201).json({
-        status: "success",
-      });
+        status: 'success'
+      })
     }
-    const resetPasswordToken = await user.generatePasswordToken();
-    user.resetPasswordToken = resetPasswordToken;
-    await user.save();
+    const resetPasswordToken = await user.generatePasswordToken()
+    user.resetPasswordToken = resetPasswordToken
+    await user.save()
     const test = await mailer({
       to: [{ Email: user.email, Name: user.fullName }],
-      subjbect: "Réinitialisation de mot de passe",
+      subjbect: 'Réinitialisation de mot de passe',
       templateId: 2526270,
       templateLanguage: true,
       variables: {
         firstName: user.firstName,
-        resetPasswordLink: `${frontUrl}/reset-password?token=${resetPasswordToken}`,
-      },
-    });
+        resetPasswordLink: `${frontUrl}/reset-password?token=${resetPasswordToken}`
+      }
+    })
     return response.status(201).json({
-      status: "success",
-    });
+      status: 'success'
+    })
   }
 
   /**
@@ -272,33 +272,33 @@ class UserController {
   async resetPassword({ request, response, auth }) {
     try {
       const { resetPassword } = request.only([
-        "resetPassword.resetPasswordToken",
-        "resetPassword.password",
-      ]);
-      const userId = User.verifyPasswordToken(resetPassword.resetPasswordToken);
-      const user = await User.find(userId);
+        'resetPassword.resetPasswordToken',
+        'resetPassword.password'
+      ])
+      const userId = User.verifyPasswordToken(resetPassword.resetPasswordToken)
+      const user = await User.find(userId)
       if (user?.resetPasswordToken !== resetPassword.resetPasswordToken) {
-        throw "invalid token";
+        throw 'invalid token'
       }
-      user.password = resetPassword.password;
-      user.resetPasswordToken = null;
-      await user.save();
-      const token = await auth.generate(user);
+      user.password = resetPassword.password
+      user.resetPasswordToken = null
+      await user.save()
+      const token = await auth.generate(user)
       await user.tokens().create({
         token: token.token,
-        type: token.type,
-      });
+        type: token.type
+      })
       return response.status(201).json({
-        status: "success",
-        data: token,
-      });
+        status: 'success',
+        data: token
+      })
     } catch {
       response.status(400).json({
-        status: "error",
-        message: "Invalid reset password",
-      });
+        status: 'error',
+        message: 'Invalid reset password'
+      })
     }
   }
 }
 
-module.exports = UserController;
+module.exports = UserController

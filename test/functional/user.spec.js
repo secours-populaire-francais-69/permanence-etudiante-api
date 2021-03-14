@@ -1,229 +1,229 @@
-const { test, trait } = use("Test/Suite")("User");
-const User = use("App/Models/User");
-const Factory = use("Factory");
+const { test, trait } = use('Test/Suite')('User')
+const User = use('App/Models/User')
+const Factory = use('Factory')
 
-trait("Test/ApiClient");
-trait("Auth/Client");
-trait("DatabaseTransactions");
+trait('Test/ApiClient')
+trait('Auth/Client')
+trait('DatabaseTransactions')
 
-test("login should return token infos when succeed", async ({ client }) => {
-  const user = await Factory.model("App/Models/User").create();
+test('login should return token infos when succeed', async ({ client }) => {
+  const user = await Factory.model('App/Models/User').create()
   const response = await client
-    .post("/login")
-    .send({ email: user.email, password: "password" })
-    .end();
+    .post('/login')
+    .send({ email: user.email, password: 'password' })
+    .end()
 
-  const tokens = await user.tokens().fetch();
-  response.assertStatus(201);
+  const tokens = await user.tokens().fetch()
+  response.assertStatus(201)
   response.assertJSONSubset({
-    status: "success",
+    status: 'success',
     data: {
-      type: "bearer",
+      type: 'bearer',
       token: tokens.rows[tokens.rows.length - 1].token,
-      refreshToken: null,
-    },
-  });
-});
+      refreshToken: null
+    }
+  })
+})
 
-test("login should return 401 when wrong credential", async ({ client }) => {
-  const user = await Factory.model("App/Models/User").create();
+test('login should return 401 when wrong credential', async ({ client }) => {
+  const user = await Factory.model('App/Models/User').create()
   const response = await client
-    .post("/login")
-    .send({ email: user.email, password: "password2" })
-    .end();
+    .post('/login')
+    .send({ email: user.email, password: 'password2' })
+    .end()
 
-  response.assertStatus(400);
-});
+  response.assertStatus(400)
+})
 
-test("sign should return 401 when user is not logged in", async ({
-  client,
+test('sign should return 401 when user is not logged in', async ({
+  client
 }) => {
   const response = await client
-    .post("/signup")
+    .post('/signup')
     .send({
-      firstName: "jean",
-      lastName: "dujardin",
-      email: "jean@spf.fr",
-      popAcceuilNumber: "4242",
+      firstName: 'jean',
+      lastName: 'dujardin',
+      email: 'jean@spf.fr',
+      popAcceuilNumber: '4242',
       isVolunteer: true,
       isAdmin: true,
-      password: "password42",
+      password: 'password42'
     })
-    .end();
+    .end()
 
-  response.assertStatus(401);
-});
+  response.assertStatus(401)
+})
 
-test("sign should return 401 when user is logged in as student", async ({
-  client,
+test('sign should return 401 when user is logged in as student', async ({
+  client
 }) => {
-  const user = await Factory.model("App/Models/User").create();
+  const user = await Factory.model('App/Models/User').create()
   const response = await client
-    .post("/signup")
+    .post('/signup')
     .send({
-      firstName: "jean",
-      lastName: "dujardin",
-      email: "jean@spf.fr",
-      popAcceuilNumber: "4242",
+      firstName: 'jean',
+      lastName: 'dujardin',
+      email: 'jean@spf.fr',
+      popAcceuilNumber: '4242',
       isVolunteer: true,
       isAdmin: true,
-      password: "password42",
+      password: 'password42'
     })
     .loginVia(user)
-    .end();
+    .end()
 
-  response.assertStatus(401);
-});
+  response.assertStatus(401)
+})
 
-test("when volunteer is logged in sign should return token infos when succeed and create the user", async ({
-  client,
+test('when volunteer is logged in sign should return token infos when succeed and create the user', async ({
+  client
 }) => {
-  const volunteer = await Factory.model("App/Models/User").create({
-    isVolunteer: true,
-  });
+  const volunteer = await Factory.model('App/Models/User').create({
+    isVolunteer: true
+  })
   const response = await client
-    .post("/signup")
+    .post('/signup')
     .send({
-      firstName: "jean",
-      lastName: "dujardin",
-      email: "jean@spf.fr",
-      popAcceuilNumber: "4242",
+      firstName: 'jean',
+      lastName: 'dujardin',
+      email: 'jean@spf.fr',
+      popAcceuilNumber: '4242',
       isVolunteer: true,
       isAdmin: true,
-      password: "password42",
+      password: 'password42'
     })
     .loginVia(volunteer)
-    .end();
+    .end()
 
-  const user = await User.findBy("email", "jean@spf.fr");
-  const tokens = await user.tokens().fetch();
-  response.assertStatus(201);
+  const user = await User.findBy('email', 'jean@spf.fr')
+  const tokens = await user.tokens().fetch()
+  response.assertStatus(201)
   response.assertJSONSubset({
-    status: "success",
+    status: 'success',
     data: {
-      type: "bearer",
+      type: 'bearer',
       token: tokens.rows[tokens.rows.length - 1].token,
-      refreshToken: null,
-    },
-  });
-});
+      refreshToken: null
+    }
+  })
+})
 
-test("login should return 401 when wrong credential", async ({ client }) => {
-  const response = await client.post("/signup").send({ email: "ladf" }).end();
+test('login should return 401 when wrong credential', async ({ client }) => {
+  const response = await client.post('/signup').send({ email: 'ladf' }).end()
 
-  response.assertStatus(400);
-});
+  response.assertStatus(400)
+})
 
-test("when not auth client get 401 when trying to get whoami", async ({
-  client,
+test('when not auth client get 401 when trying to get whoami', async ({
+  client
 }) => {
-  await Factory.model("App/Models/User").create();
-  const response = await client.get(`/whoami`).end();
+  await Factory.model('App/Models/User').create()
+  const response = await client.get(`/whoami`).end()
 
-  response.assertStatus(401);
-});
+  response.assertStatus(401)
+})
 
-test("get detail of a whoami", async ({ client }) => {
-  const user = await Factory.model("App/Models/User").create();
-  const response = await client.get(`whoami`).loginVia(user).end();
+test('get detail of a whoami', async ({ client }) => {
+  const user = await Factory.model('App/Models/User').create()
+  const response = await client.get(`whoami`).loginVia(user).end()
 
-  response.assertStatus(200);
+  response.assertStatus(200)
   response.assertJSONSubset({
     username: user.username,
-    email: user.email,
-  });
-});
+    email: user.email
+  })
+})
 
-test("send reset password mail", async ({ client, assert }) => {
-  const user = await Factory.model("App/Models/User").create();
+test('send reset password mail', async ({ client, assert }) => {
+  const user = await Factory.model('App/Models/User').create()
   const response = await client
-    .post("forgotten-password")
+    .post('forgotten-password')
     .send({
       forgottenPassword: {
-        email: user.email,
-      },
+        email: user.email
+      }
     })
-    .end();
+    .end()
 
-  response.assertStatus(201);
+  response.assertStatus(201)
   response.assertJSONSubset({
-    status: "success",
-  });
-  await user.reload();
-  assert.isNotNull(user.resetPasswordToken);
-});
+    status: 'success'
+  })
+  await user.reload()
+  assert.isNotNull(user.resetPasswordToken)
+})
 
-test("fake send reset password mail when user is not found", async ({
+test('fake send reset password mail when user is not found', async ({
   client,
-  assert,
+  assert
 }) => {
-  const user = await Factory.model("App/Models/User").create();
+  const user = await Factory.model('App/Models/User').create()
   const response = await client
-    .post("forgotten-password")
+    .post('forgotten-password')
     .send({
       forgottenPassword: {
-        email: `whatever${user.email}`,
-      },
+        email: `whatever${user.email}`
+      }
     })
-    .end();
+    .end()
 
-  response.assertStatus(201);
+  response.assertStatus(201)
   response.assertJSONSubset({
-    status: "success",
-  });
-  await user.reload();
-  assert.equal(user.resetPasswordToken, null);
-});
+    status: 'success'
+  })
+  await user.reload()
+  assert.equal(user.resetPasswordToken, null)
+})
 
-test("reset password", async ({ client, assert }) => {
-  const user = await Factory.model("App/Models/User").create();
-  const resetPasswordToken = user.generatePasswordToken();
-  user.resetPasswordToken = resetPasswordToken;
-  await user.save();
+test('reset password', async ({ client, assert }) => {
+  const user = await Factory.model('App/Models/User').create()
+  const resetPasswordToken = user.generatePasswordToken()
+  user.resetPasswordToken = resetPasswordToken
+  await user.save()
   const response = await client
-    .post("reset-password")
+    .post('reset-password')
     .send({
       resetPassword: {
         resetPasswordToken,
-        password: "whatever",
-      },
+        password: 'whatever'
+      }
     })
-    .end();
+    .end()
 
-  const tokens = await user.tokens().fetch();
-  response.assertStatus(201);
+  const tokens = await user.tokens().fetch()
+  response.assertStatus(201)
   response.assertJSONSubset({
-    status: "success",
+    status: 'success',
     data: {
-      type: "bearer",
+      type: 'bearer',
       token: tokens.rows[tokens.rows.length - 1].token,
-      refreshToken: null,
-    },
-  });
-  await user.reload();
-  assert.equal(user.resetPasswordToken, null);
-});
+      refreshToken: null
+    }
+  })
+  await user.reload()
+  assert.equal(user.resetPasswordToken, null)
+})
 
-test("reset password with wrong params", async ({ client, assert }) => {
-  const user = await Factory.model("App/Models/User").create();
-  const resetPasswordToken = user.generatePasswordToken();
-  user.resetPasswordToken = resetPasswordToken;
-  await user.save();
+test('reset password with wrong params', async ({ client, assert }) => {
+  const user = await Factory.model('App/Models/User').create()
+  const resetPasswordToken = user.generatePasswordToken()
+  user.resetPasswordToken = resetPasswordToken
+  await user.save()
   const response = await client
-    .post("reset-password")
+    .post('reset-password')
     .send({
       resetPassword: {
-        resetPasswordToken: "wrongtoken",
-        password: "whatever",
-      },
+        resetPasswordToken: 'wrongtoken',
+        password: 'whatever'
+      }
     })
-    .end();
+    .end()
 
-  response.assertStatus(400);
+  response.assertStatus(400)
   response.assertJSONSubset({
-    status: "error",
-    message: "Invalid reset password",
-  });
-  await user.reload();
-  assert.isNotNull(user.resetPasswordToken);
-});
+    status: 'error',
+    message: 'Invalid reset password'
+  })
+  await user.reload()
+  assert.isNotNull(user.resetPasswordToken)
+})
