@@ -11,4 +11,4 @@ class BasicService {
   }
 }
 
-module.exports = StoreBasicService
+module.exports = BasicService
