@@ -1,10 +1,7 @@
 const { test, trait, beforeEach } = use('Test/Suite')('BasicService')
 const BasicService = use('App/Models/BasicService')
 const BasicServiceSubscriber = use('App/Models/BasicServiceSubscriber')
-const Token = use('App/Models/Token')
-const User = use('App/Models/User')
 const Factory = use('Factory')
-const Database = use('Database')
 
 trait('Test/ApiClient')
 trait('Auth/Client')
@@ -31,7 +28,7 @@ test('when not auth client get 401 when trying to get list of basic service', as
 })
 
 test('get list of basic service', async ({ client, assert }) => {
-  basicService = await Factory.model('App/Models/BasicService').create()
+  const basicService = await Factory.model('App/Models/BasicService').create()
   const response = await client.get('/basic-services').loginVia(user).end()
 
   response.assertStatus(200)
@@ -44,14 +41,14 @@ test('get list of basic service', async ({ client, assert }) => {
 test('when not auth client get 401 when trying to get detail of an basic service', async ({
   client
 }) => {
-  await Factory.model('App/Models/BasicService').create()
+  const basicService = await Factory.model('App/Models/BasicService').create()
   const response = await client.get(`/basic-services/${basicService.id}`).end()
 
   response.assertStatus(401)
 })
 
 test('get detail of a basic service', async ({ client, assert }) => {
-  basicService = await Factory.model('App/Models/BasicService').create()
+  const basicService = await Factory.model('App/Models/BasicService').create()
   const response = await client
     .get(`/basic-services/${basicService.id}`)
     .loginVia(user)
