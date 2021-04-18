@@ -71,3 +71,19 @@ Route.post(
   'basic-services/:id/unsubscribe',
   'BasicServiceController.unsubscribe'
 ).middleware(['auth:jwt'])
+Route.resource('events', 'EventController')
+  .middleware(
+    new Map([
+      [['store'], ['auth:jwt', 'role:volunteer']],
+      [['update'], ['auth:jwt', 'role:volunteer']],
+      [['destroy'], ['auth:jwt', 'role:volunteer']],
+      [['index'], ['auth:jwt']],
+      [['show'], ['auth:jwt']]
+    ])
+  )
+  .validator(
+    new Map([
+      [['event.store'], ['Event']],
+      [['event.update'], ['Event']]
+    ])
+  )

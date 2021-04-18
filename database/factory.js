@@ -41,3 +41,15 @@ Factory.blueprint('App/Models/BasicService', async (faker) => {
     isClosed: faker.bool()
   }
 })
+
+Factory.blueprint('App/Models/Event', async (faker) => {
+  return {
+    startAt: faker.date(),
+    endAt: faker.date(),
+    maxPeople: faker.integer({ min: 1, max: 50 }),
+    title: faker.last(),
+    comment: faker.first(),
+    isFree: faker.bool(),
+    isClosed: faker.bool()
+  }
+})
