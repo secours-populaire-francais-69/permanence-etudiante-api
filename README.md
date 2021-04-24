@@ -2,10 +2,9 @@
 
 this project is done with node/adonis
 
-[staging](https://permanence-etudiante-staging.herokuapp.com/)
-[prod](https://permanence-etudiante.herokuapp.com/)
+[staging](https://permanence-spf-staging-api.herokuapp.com/)
 
-[staging documentation](https://permanence-etudiante-staging.herokuapp.com/docs/)
+[staging documentation](https://permanence-spf-staging-api.herokuapp.com/docs/)
 you can tests any api via the "Try it out" button in the documentation page
 
 ## Requirements
