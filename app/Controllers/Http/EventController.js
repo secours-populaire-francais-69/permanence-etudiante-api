@@ -11,6 +11,9 @@ class EventController {
    * /events:
    *   get:
    *     summary: rest api to list events
+   *     tags:
+   *       - students
+   *       - volunteers
    *     security:
    *       - bearerAuth: []
    *     produces:
@@ -37,6 +40,8 @@ class EventController {
    * /events:
    *   post:
    *     summary: rest api to create an event
+   *     tags:
+   *       - volunteers
    *     security:
    *       - bearerAuth: []
    *     produces:
@@ -100,6 +105,9 @@ class EventController {
    * /events/{eventId}:
    *   get:
    *     summary: rest api to get details of an event
+   *     tags:
+   *       - students
+   *       - volunteers
    *     security:
    *       - bearerAuth: []
    *     produces:
@@ -131,6 +139,8 @@ class EventController {
    * /events/{eventId}:
    *   put:
    *     summary: rest api to update an event
+   *     tags:
+   *       - volunteers
    *     security:
    *       - bearerAuth: []
    *     produces:
@@ -200,6 +210,8 @@ class EventController {
    * /events/{eventId}:
    *   delete:
    *     summary: rest api to delete an event
+   *     tags:
+   *       - volunteers
    *     security:
    *       - bearerAuth: []
    *     produces:
