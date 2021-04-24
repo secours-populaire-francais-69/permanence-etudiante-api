@@ -10,6 +10,8 @@ class UserController {
    * /login:
    *   post:
    *     summary: rest api to log users
+   *     tags:
+   *       - auth
    *     produces:
    *       - application/json
    *     parameters:
@@ -71,6 +73,8 @@ class UserController {
    * /signup:
    *   post:
    *     summary: rest api to signup users
+   *     tags:
+   *       - auth
    *     produces:
    *       - application/json
    *     parameters:
@@ -151,6 +155,8 @@ class UserController {
    * /whoami:
    *   get:
    *     summary: rest api to get my information
+   *     tags:
+   *       - auth
    *     produces:
    *       - application/json
    *     security:
@@ -175,6 +181,8 @@ class UserController {
    * /forgotten-password:
    *   post:
    *     summary: rest api get mail to reset user password
+   *     tags:
+   *       - auth
    *     produces:
    *       - application/json
    *     parameters:
@@ -236,6 +244,8 @@ class UserController {
    * /reset-password:
    *   post:
    *     summary: rest api to reset user password
+   *     tags:
+   *       - auth
    *     produces:
    *       - application/json
    *     parameters:
