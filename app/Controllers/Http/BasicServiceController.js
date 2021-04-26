@@ -11,6 +11,9 @@ class BasicServiceController {
    * /basic-services:
    *   get:
    *     summary: rest api to list basic services
+   *     tags:
+   *       - students
+   *       - volunteers
    *     security:
    *       - bearerAuth: []
    *     produces:
@@ -37,6 +40,8 @@ class BasicServiceController {
    * /basic-services:
    *   post:
    *     summary: rest api to create an basic service
+   *     tags:
+   *       - volunteers
    *     security:
    *       - bearerAuth: []
    *     produces:
@@ -91,6 +96,9 @@ class BasicServiceController {
    * /basic-services/{basicServiceId}:
    *   get:
    *     summary: rest api to get details of an basic service
+   *     tags:
+   *       - students
+   *       - volunteers
    *     security:
    *       - bearerAuth: []
    *     produces:
@@ -122,6 +130,8 @@ class BasicServiceController {
    * /basic-services/{basicServiceId}:
    *   put:
    *     summary: rest api to update an basic service
+   *     tags:
+   *       - volunteers
    *     security:
    *       - bearerAuth: []
    *     produces:
@@ -182,6 +192,8 @@ class BasicServiceController {
    * /basic-services/{basicServiceId}:
    *   delete:
    *     summary: rest api to delete an basic service
+   *     tags:
+   *       - volunteers
    *     security:
    *       - bearerAuth: []
    *     produces:
@@ -214,6 +226,9 @@ class BasicServiceController {
    * /basic-services/{basicServiceId}/subscribe:
    *   post:
    *     summary: rest api to subscribe to a basic service for current user
+   *     tags:
+   *       - students
+   *       - volunteers
    *     security:
    *       - bearerAuth: []
    *     produces:
@@ -250,6 +265,9 @@ class BasicServiceController {
    * /basic-services/{basicServiceId}/unsubscribe:
    *   post:
    *     summary: rest api to unsubscribe to a basic service for current user
+   *     tags:
+   *       - students
+   *       - volunteers
    *     security:
    *       - bearerAuth: []
    *     produces:

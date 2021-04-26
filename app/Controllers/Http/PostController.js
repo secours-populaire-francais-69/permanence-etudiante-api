@@ -8,6 +8,9 @@ class PostController {
    * /posts:
    *   get:
    *     summary: rest api to list posts
+   *     tags:
+   *       - students
+   *       - volunteers
    *     security:
    *       - bearerAuth: []
    *     produces:
@@ -34,6 +37,8 @@ class PostController {
    * /posts:
    *   post:
    *     summary: rest api to create a post
+   *     tags:
+   *       - volunteers
    *     security:
    *       - bearerAuth: []
    *     produces:
@@ -86,6 +91,9 @@ class PostController {
    * /posts/{postId}:
    *   get:
    *     summary: rest api to get details of a post
+   *     tags:
+   *       - students
+   *       - volunteers
    *     security:
    *       - bearerAuth: []
    *     produces:
@@ -117,6 +125,8 @@ class PostController {
    * /posts/{postId}:
    *   put:
    *     summary: rest api to update a post
+   *     tags:
+   *       - volunteers
    *     security:
    *       - bearerAuth: []
    *     produces:
@@ -174,6 +184,8 @@ class PostController {
    * /posts/{postId}:
    *   delete:
    *     summary: rest api to delete a post
+   *     tags:
+   *       - volunteers
    *     security:
    *       - bearerAuth: []
    *     produces:
