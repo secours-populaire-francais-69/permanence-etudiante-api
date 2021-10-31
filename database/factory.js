@@ -17,7 +17,7 @@ Factory.blueprint('App/Models/User', async (faker, i, { isVolunteer }) => {
   return {
     firstName: faker.first(),
     lastName: faker.last(),
-    popAcceuilNumber: faker.fbid(),
+    popAccueilNumber: faker.fbid(),
     isVolunteer: isVolunteer || false,
     isAdmin: false,
     email: faker.email(),

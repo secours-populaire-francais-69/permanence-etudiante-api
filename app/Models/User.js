@@ -23,7 +23,7 @@ const jwt = require('jsonwebtoken')
  *          type: string
  *        lastName:
  *          type: string
- *        popAcceuilNumber:
+ *        popAccueilNumber:
  *          type: string
  *        isVolunteer:
  *          type: boolean
@@ -43,7 +43,7 @@ const jwt = require('jsonwebtoken')
  *      required:
  *        - firstName
  *        - lastName
- *        - popAcceuilNumber
+ *        - popAccueilNumber
  *        - isVolunteer
  *        - isAdmin
  *        - email

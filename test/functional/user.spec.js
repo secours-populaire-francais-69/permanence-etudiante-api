@@ -44,7 +44,7 @@ test('sign should return 401 when user is not logged in', async ({
       firstName: 'jean',
       lastName: 'dujardin',
       email: 'jean@spf.fr',
-      popAcceuilNumber: '4242',
+      popAccueilNumber: '4242',
       isVolunteer: true,
       isAdmin: true,
       password: 'password42'
@@ -64,7 +64,7 @@ test('sign should return 401 when user is logged in as student', async ({
       firstName: 'jean',
       lastName: 'dujardin',
       email: 'jean@spf.fr',
-      popAcceuilNumber: '4242',
+      popAccueilNumber: '4242',
       isVolunteer: true,
       isAdmin: true,
       password: 'password42'
@@ -87,7 +87,7 @@ test('when volunteer is logged in sign should return token infos when succeed an
       firstName: 'jean',
       lastName: 'dujardin',
       email: 'jean@spf.fr',
-      popAcceuilNumber: '4242',
+      popAccueilNumber: '4242',
       isVolunteer: true,
       isAdmin: true,
       password: 'password42'

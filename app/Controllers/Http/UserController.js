@@ -90,7 +90,7 @@ class UserController {
    *               type: string
    *             lastName:
    *               type: string
-   *             popAcceuilNumber:
+   *             popAccueilNumber:
    *               type: string
    *             isVolunteer:
    *               type: boolean
@@ -125,7 +125,7 @@ class UserController {
       const userParams = request.only([
         'firstName',
         'lastName',
-        'popAcceuilNumber',
+        'popAccueilNumber',
         'isVolunteer',
         'isAdmin',
         'email',
