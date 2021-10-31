@@ -20,7 +20,7 @@ const Model = use('Model')
  *          type: string
  *        comment:
  *          type: string
- *        isFree:
+ *        isChargeable:
  *          type: boolean
  *        isClosed:
  *          type: boolean
@@ -35,7 +35,7 @@ const Model = use('Model')
  *        - endAt
  *        - title
  *        - comment
- *        - isFree
+ *        - isChargeable
  *        - isClosed
  */
 class Event extends Model {

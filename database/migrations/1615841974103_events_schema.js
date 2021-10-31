@@ -12,7 +12,7 @@ class EventsSchema extends Schema {
       table.integer('maxPeople')
       table.string('title').notNullable()
       table.text('comment').notNullable()
-      table.boolean('isFree').notNullable().defaultTo(true)
+      table.boolean('isChargeable').notNullable().defaultTo(true)
       table.boolean('isClosed').notNullable().defaultTo(false)
       table.timestamps()
     })

@@ -8,7 +8,7 @@ class Event {
       'event.maxPeople': 'required|number',
       'event.title': 'required|string',
       'event.comment': 'required|string',
-      'event.isFree': 'required|boolean',
+      'event.isChargeable': 'required|boolean',
       'event.isClosed': 'required|boolean'
     }
   }
