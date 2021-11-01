@@ -49,7 +49,7 @@ Factory.blueprint('App/Models/Event', async (faker) => {
     maxPeople: faker.integer({ min: 1, max: 50 }),
     title: faker.last(),
     comment: faker.first(),
-    isFree: faker.bool(),
+    isChargeable: faker.bool(),
     isClosed: faker.bool()
   }
 })

@@ -68,7 +68,7 @@ class EventController {
    *                   type: string
    *                 comment:
    *                   type: string
-   *                 isFree:
+   *                 isChargeable:
    *                   type: boolean
    *                 isClosed:
    *                   type: boolean
@@ -93,7 +93,7 @@ class EventController {
       'event.maxPeople',
       'event.title',
       'event.comment',
-      'event.isFree',
+      'event.isChargeable',
       'event.isClosed'
     ])
     const createdEvent = await Event.create(event)
@@ -173,7 +173,7 @@ class EventController {
    *                   type: string
    *                 comment:
    *                   type: string
-   *                 isFree:
+   *                 isChargeable:
    *                   type: boolean
    *                 isClosed:
    *                   type: boolean
@@ -197,7 +197,7 @@ class EventController {
       'event.maxPeople',
       'event.title',
       'event.comment',
-      'event.isFree',
+      'event.isChargeable',
       'event.isClosed'
     ])
     eventToUpdate.merge(event)

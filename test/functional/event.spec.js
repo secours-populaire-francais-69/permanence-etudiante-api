@@ -31,7 +31,7 @@ test('get list of events', async ({ client, assert }) => {
 
   response.assertStatus(200)
   assert.equal(response.body[0].isClosed, event.isClosed)
-  assert.equal(response.body[0].isFree, event.isFree)
+  assert.equal(response.body[0].isChargeable, event.isChargeable)
   assert.equal(response.body[0].maxPeople, event.maxPeople)
   assert.equal(response.body[0].title, event.title)
   assert.equal(response.body[0].comment, event.comment)
@@ -54,7 +54,7 @@ test('get detail of a event', async ({ client, assert }) => {
 
   response.assertStatus(200)
   assert.equal(response.body.isClosed, event.isClosed)
-  assert.equal(response.body.isFree, event.isFree)
+  assert.equal(response.body.isChargeable, event.isChargeable)
   assert.equal(response.body.maxPeople, event.maxPeople)
   assert.equal(response.body.title, event.title)
   assert.equal(response.body.comment, event.comment)
@@ -94,7 +94,7 @@ test('create a event as volunteer', async ({ client, assert }) => {
 
   response.assertStatus(201)
   assert.equal(response.body.isClosed, event.isClosed)
-  assert.equal(response.body.isFree, event.isFree)
+  assert.equal(response.body.isChargeable, event.isChargeable)
   assert.equal(response.body.maxPeople, event.maxPeople)
   assert.equal(response.body.title, event.title)
   assert.equal(response.body.comment, event.comment)
@@ -137,7 +137,7 @@ test('update an basic-service as volunteer', async ({ client, assert }) => {
 
   response.assertStatus(200)
   assert.equal(response.body.isClosed, event.isClosed)
-  assert.equal(response.body.isFree, event.isFree)
+  assert.equal(response.body.isChargeable, event.isChargeable)
   assert.equal(response.body.maxPeople, event.maxPeople)
   assert.equal(response.body.title, 'whatever')
   assert.equal(response.body.comment, event.comment)
@@ -175,7 +175,7 @@ test('delete a event as volunteer', async ({ client, assert }) => {
 
   response.assertStatus(200)
   assert.equal(response.body.isClosed, event.isClosed)
-  assert.equal(response.body.isFree, event.isFree)
+  assert.equal(response.body.isChargeable, event.isChargeable)
   assert.equal(response.body.maxPeople, event.maxPeople)
   assert.equal(response.body.title, event.title)
   assert.equal(response.body.comment, event.comment)
